@@ -9,17 +9,13 @@ import java.util.List;
 @Service
 public class CarService {
 
-    List<Car> list = new ArrayList<>();
+    private final List<Car> list = new ArrayList<>();
 
-    public List<Car> getList() {
-        return list;
-    }
-
-    Car car1 = new Car("Kia", 3, "black");
-    Car car2 = new Car("Ford", 2, "white");
-    Car car3 = new Car("Toyota", 3, "red");
-    Car car4 = new Car("Honda", 4, "gray");
-    Car car5 = new Car("Mitsubishi", 3, "purple");
+    private final Car car1 = new Car("Kia", 3, "black");
+    private final Car car2 = new Car("Ford", 2, "white");
+    private final Car car3 = new Car("Toyota", 3, "red");
+    private final Car car4 = new Car("Honda", 4, "gray");
+    private final Car car5 = new Car("Mitsubishi", 3, "purple");
 
     {
         list.add(car1);
@@ -29,24 +25,11 @@ public class CarService {
         list.add(car5);
     }
 
-    public List<Car> getOfCar(List<Car> list, int count) {
-        List<Car> result;
-        switch (count) {
-            case 1:
-                result = list.subList(0, 1);
-                break;
-            case 2:
-                result = list.subList(0, 2);
-                break;
-            case 3:
-                result = list.subList(0, 3);
-                break;
-            case 4:
-                result = list.subList(0, 4);
-                break;
-            default:
-                result = list;
-        }
-        return result;
+    public List<Car> getList() {
+        return list;
+    }
+
+    public List<Car> getOfCar(int count) {
+        return getList().subList(0,count);
     }
 }

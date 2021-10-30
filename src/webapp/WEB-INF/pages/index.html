@@ -1,15 +1,45 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <meta charset="UTF-8" />
+    <title>All users</title>
+    <style>
+        table th, table td {padding: 5px;}
+        .row  {
+            font-style: italic;
+        }
+        .even-row {
+            color: black;
+        }
+        .odd-row {
+            color: blue;
+        }
+    </style>
 </head>
+
 <body>
-<div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
-</div>
+<h1>Users</h1>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>LastName</th>
+        <th>Age</th>
+    </tr>
+
+    <tr th:each="user, state : ${user}"
+        class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+        <td>
+            <a th:href="@{/user/{id}(id=${user.getId()})}"
+               th:text="${user.getName()}" >Name</a>
+        </td>
+        <td th:utext="${user.getLastName}">LastName</td>
+        <td th:utext="${user.getAge}">Age</td>
+    </tr>
+</table>
+
+<br/>
+<hr/>
+<a href="/user/new">Create new user</a>
 </body>
 </html>

@@ -33,7 +33,7 @@
             <a th:href="@{/user/{id}(id=${user.getId()})}"
                th:text="${user.getName()}" >Name</a>
         </td>
-        <td th:utext="${user.getLastName}">LastName</td>
+        <td th:utext="${user.getLastname}">LastName</td>
         <td th:utext="${user.getAge}">Age</td>
     </tr>
 </table>

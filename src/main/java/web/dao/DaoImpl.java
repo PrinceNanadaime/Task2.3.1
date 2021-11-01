@@ -13,7 +13,7 @@ public class DaoImpl implements Dao {
     private EntityManager entityManager;
 
     public List<User> getUsers() {
-        return entityManager.createQuery("FROM User ", User.class).getResultList();
+        return entityManager.createQuery("From User ",User.class).getResultList();
     }
 
     public User show(long id) {
@@ -25,11 +25,7 @@ public class DaoImpl implements Dao {
     }
 
     public void update(User newVersion) {
-        User oldVersion = show(newVersion.getId());
-        oldVersion.setName(newVersion.getName());
-        oldVersion.setLastName(newVersion.getLastName());
-        oldVersion.setAge(newVersion.getAge());
-        entityManager.merge(oldVersion);
+        entityManager.merge(newVersion);
     }
 
     public void delete(long id) {

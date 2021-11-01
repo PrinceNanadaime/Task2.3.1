@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDao;
+import web.service.UserService;
 import web.model.User;
 
 import javax.validation.Valid;
@@ -13,10 +13,10 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UsersController {
 
-    private final UserDao userDao;
+    private final UserService userDao;
 
     @Autowired
-    public UsersController(UserDao userDao) {
+    public UsersController(UserService userDao) {
         this.userDao = userDao;
     }
 
@@ -35,26 +35,26 @@ public class UsersController {
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        return "pages/new";
+        return "new";
     }
 
     @PostMapping
     public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         userDao.save(user);
-        return bindingResult.hasErrors()?"pages/new": "redirect:/user";
+        return bindingResult.hasErrors()?"new": "redirect:/user";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userDao.show(id));
-        return "pages/edit";
+        return "edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable("id") int id) {
-        if(bindingResult.hasErrors()) return "pages/edit";
+        if(bindingResult.hasErrors()) return "edit";
         userDao.update(id, user);
-        return bindingResult.hasErrors()?"pages/edit": "redirect:/user";
+        return bindingResult.hasErrors()?"edit": "redirect:/user";
     }
 
     @DeleteMapping("/{id}")

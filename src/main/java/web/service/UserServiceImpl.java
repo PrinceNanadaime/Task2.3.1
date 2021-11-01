@@ -26,15 +26,15 @@ public class UserServiceImpl implements UserService{
         return dao.getUsers();
     }
 
-    public User show(int id){
+    public User show(long id){
         return dao.show(id);
     }
 
-    public void delete(int id){
+    public void delete(long id){
         dao.delete(id);
     }
 
-    public void update(int id , User user){
-        dao.update(id, user);
+    public void update(User user){
+        dao.update(user);
     }
 }

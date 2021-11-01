@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface Dao {
     List<User> getUsers();
-    User show(int id);
+    User show(long id);
     void save(User user);
-    void update(int id, User newVersion);
-    void delete(int id);
+    void update(User newVersion);
+    void delete(long id);
 }

@@ -13,23 +13,23 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UsersController {
 
-    private final UserService userDao;
+    private final UserService userService;
 
     @Autowired
-    public UsersController(UserService userDao) {
-        this.userDao = userDao;
+    public UsersController(UserService userService) {
+        this.userService = userService;
     }
 
 
     @GetMapping()
     public String getUsers (Model model) {
-        model.addAttribute("user", userDao.getUsers());
+        model.addAttribute("user", userService.getUsers());
         return "index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
-        model.addAttribute("user", userDao.show(id));
+        model.addAttribute("user", userService.show(id));
         return "show";
     }
 
@@ -40,26 +40,26 @@ public class UsersController {
 
     @PostMapping
     public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        userDao.save(user);
+        userService.save(user);
         return bindingResult.hasErrors()?"new": "redirect:/user";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userDao.show(id));
+        model.addAttribute("user", userService.show(id));
         return "edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "edit";
-        userDao.update(id, user);
+        userService.update(user);
         return bindingResult.hasErrors()?"edit": "redirect:/user";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userDao.delete(id);
+        userService.delete(id);
         return "redirect:/user";
     }
 }

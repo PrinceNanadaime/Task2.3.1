@@ -16,25 +16,23 @@ public class DaoImpl implements Dao {
         return entityManager.createQuery("FROM User ", User.class).getResultList();
     }
 
-    public User show(int id) {
-        TypedQuery<User> q = entityManager.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class);
-        q.setParameter("id", id);
-        return q.getResultList().stream().findAny().orElse(null);
+    public User show(long id) {
+        return entityManager.find(User.class, id);
     }
 
     public void save(User user) {
         entityManager.persist(user);
     }
 
-    public void update(int id, User newVersion) {
-        User oldVersion= show(id);
+    public void update(User newVersion) {
+        User oldVersion = show(newVersion.getId());
         oldVersion.setName(newVersion.getName());
         oldVersion.setLastName(newVersion.getLastName());
         oldVersion.setAge(newVersion.getAge());
         entityManager.merge(oldVersion);
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         Query query = entityManager.createQuery("DELETE FROM User u WHERE u.id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
